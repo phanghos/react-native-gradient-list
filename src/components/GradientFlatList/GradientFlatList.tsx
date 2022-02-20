@@ -13,6 +13,7 @@ type GradientFlatListProps<T> = GradientListProps &
   FlatListProps<T> &
   Pick<ListBottomGradientProps, 'gradientColor'>;
 
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint
 export const GradientFlatList = <T extends unknown = unknown>({
   scrollBarConfig,
   gradientOffset = 0,
