@@ -3,18 +3,32 @@ Custom `ScrollView` and `FlatList` components which will render a gradient at th
 
 ## Installation
 
-Using npm
+Using `npm`
 
-`npm install react-native-gradient-list`
+`npm i react-native-gradient-list`
 
-For the library to work, you also need to install Reanimated 2 and `react-native-linear-gradient` as dependencies
+This package depends on `react-native-reanimated` (>=2) and `react-native-linear-gradient`, so you will need to install both of them
 
-`npm install react-native-reanimated react-native-linear-gradient`
-
-Then, go to iOS directory and install the pods
-
-`cd ios && pod install`
+`npm i react-native-reanimated react-native-linear-gradient`
 
 Make sure to follow the [installation instructions for Reanimated](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/installation)
 
-## How to use
+## Usage
+
+Both `GradienScrollView` and `GradientFlatList` behave exactly as their built-in RN counterparts, so they accept `ScrollViewProps` and `FlatListProps`, respectively, plus a few custom props.
+
+```js
+<GradientScrollView>
+  <View>
+    <Text>{...}</Text>
+  </View>
+</GradientScrollView>
+```
+
+## Props
+
+| Prop             | Description                                                 |   |   |   |
+|------------------|-------------------------------------------------------------|---|---|---|
+| `gradientColor`  | Gradient color. It needs to be in HEX format i.e. `#ff0000` |   |   |   |
+| `gradientOffset` | Gradient offset from the bottom                             |   |   |   |
+|                  |                                                             |   |   |   |
