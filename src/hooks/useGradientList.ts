@@ -37,10 +37,10 @@ export const useGradientList = ({
 
   const scrollPerc = useDerivedValue(
     () =>
-      (translateY.value / Math.abs(completeHeight - visibleHeight)) *
+      (translateY.value / Math.abs(scrollableSpace)) *
       (visibleHeight - scrollBarHeight - scrollBarOffset - contentOffset),
     [
-      completeHeight,
+      scrollableSpace,
       visibleHeight,
       scrollBarHeight,
       scrollBarOffset,

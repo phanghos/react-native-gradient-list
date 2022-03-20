@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { FlatList, FlatListProps, View } from 'react-native';
+import { FlatList, FlatListProps } from 'react-native';
 import Animated from 'react-native-reanimated';
 import {
   ListBottomGradient,
@@ -21,6 +21,7 @@ export const GradientFlatList = <T extends unknown = unknown>({
   renderCustomScrollBar,
   gradientColor,
   offset,
+  showsVerticalScrollIndicator,
   ...restProps
 }: GradientFlatListProps<T>) => {
   const { width, height, ...restScrollBarProps } =
@@ -42,34 +43,30 @@ export const GradientFlatList = <T extends unknown = unknown>({
     [],
   );
 
-  /*
-    const realOpacity = useDerivedValue(() => {
-      if (!triggerGradient) return opacity.value;
-      return triggerGradient.value < 1 ? triggerGradient.value : opacity.value;
-    });
-    */
-
   return (
     <>
-      <View>
-        {renderCustomScrollBar && (
-          <ScrollBar
-            {...restScrollBarProps}
-            scrollIndicatorInsets={scrollIndicatorInsets}
-            width={width}
-            height={height}
-            translateY={translateY}
-          />
-        )}
-        <AnimatedFlatList
-          {...restProps}
-          onScroll={onScroll}
-          showsVerticalScrollIndicator={!renderCustomScrollBar}
-          scrollEventThrottle={16}
-          onLayout={onLayout}
-          onContentSizeChange={onContentSizeChange}
+      {renderCustomScrollBar && (
+        <ScrollBar
+          {...restScrollBarProps}
+          scrollIndicatorInsets={scrollIndicatorInsets}
+          width={width}
+          height={height}
+          translateY={translateY}
         />
-      </View>
+      )}
+      <AnimatedFlatList
+        {...restProps}
+        onScroll={onScroll}
+        showsVerticalScrollIndicator={
+          !renderCustomScrollBar &&
+          (showsVerticalScrollIndicator === undefined ||
+            !!showsVerticalScrollIndicator)
+        }
+        scrollIndicatorInsets={scrollIndicatorInsets}
+        scrollEventThrottle={16}
+        onLayout={onLayout}
+        onContentSizeChange={onContentSizeChange}
+      />
       <ListBottomGradient
         offset={gradientOffset}
         opacity={opacity}

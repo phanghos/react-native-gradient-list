@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { ScrollViewProps, View } from 'react-native';
+import { ScrollViewProps } from 'react-native';
 import Animated from 'react-native-reanimated';
 import {
   ListBottomGradient,
@@ -20,6 +20,7 @@ export const GradientScrollView = ({
   renderCustomScrollBar,
   gradientColor,
   offset,
+  showsVerticalScrollIndicator,
   children,
   ...restProps
 }: PropsWithChildren<GradientScrollViewProps>) => {
@@ -35,36 +36,32 @@ export const GradientScrollView = ({
     contentOffset: offset,
   });
 
-  /*
-    const realOpacity = useDerivedValue(() => {
-      if (!triggerGradient) return opacity.value;
-      return triggerGradient.value < 1 ? triggerGradient.value : opacity.value;
-    });
-    */
-
   return (
     <>
-      <View>
-        {renderCustomScrollBar && (
-          <ScrollBar
-            {...restScrollBarProps}
-            scrollIndicatorInsets={scrollIndicatorInsets}
-            width={width}
-            height={height}
-            translateY={translateY}
-          />
-        )}
-        <Animated.ScrollView
-          {...restProps}
-          onScroll={onScroll}
-          showsVerticalScrollIndicator={!renderCustomScrollBar}
-          scrollEventThrottle={16}
-          onLayout={onLayout}
-          onContentSizeChange={onContentSizeChange}
-        >
-          {children}
-        </Animated.ScrollView>
-      </View>
+      {renderCustomScrollBar && (
+        <ScrollBar
+          {...restScrollBarProps}
+          scrollIndicatorInsets={scrollIndicatorInsets}
+          width={width}
+          height={height}
+          translateY={translateY}
+        />
+      )}
+      <Animated.ScrollView
+        {...restProps}
+        onScroll={onScroll}
+        showsVerticalScrollIndicator={
+          !renderCustomScrollBar &&
+          (showsVerticalScrollIndicator === undefined ||
+            !!showsVerticalScrollIndicator)
+        }
+        scrollIndicatorInsets={scrollIndicatorInsets}
+        scrollEventThrottle={16}
+        onLayout={onLayout}
+        onContentSizeChange={onContentSizeChange}
+      >
+        {children}
+      </Animated.ScrollView>
       <ListBottomGradient
         offset={gradientOffset}
         opacity={opacity}
